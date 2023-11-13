@@ -1,17 +1,25 @@
 import React, { useState } from 'react'
 import { XMarkIcon } from '@heroicons/react/24/solid'
+import axios from 'axios';
 
 type AddProps = {
     visible: boolean;
     onClose: any;
 }
 function ModalAdd({ visible, onClose }: AddProps) {
-    const [password, setPassword] = useState("");
-    const [name, setName] = useState("")
-    const [last, setLast] = useState("")
-    const [role, setRole] = useState("")
-    const [userid, setUserId] = useState("")
+    const [data, setData] = useState({
+        Name: "",
+        Category: "",
+        Price: 0,
+        Onhand: 0,
+    });
 
+    const inputValue = (name: string, value: any) => {
+        setData({
+            ...data,
+            [name]: value,
+        });
+    };
     //console.log(data);
 
     const handleOnClose = (e: any) => {
@@ -38,52 +46,37 @@ function ModalAdd({ visible, onClose }: AddProps) {
                         </div>
                     </div>
 
-                    <form onSubmit={(event) => {
-
-
+                    <form onSubmit={async (event) => {
+                        await axios.post("http://127.0.0.1:8000/inventory", data);
+                        handleOnClose;
                         return event.preventDefault()
                     }}>
                         <div className="p-6.5 ">
                             {/* id name */}
                             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
-                                <div className="w-full xl:w-1/2">
-                                    <label className="mb-2.5 block text-black dark:text-white">
-                                        ProductID
-                                    </label>
-                                    <div className="relative z-20 bg-transparent dark:bg-form-input mb-4.5">
-                                    <input
-                                        onChange={e => setLast(e.target.value)}
-                                        type="text"
-                                        required
-                                        placeholder="Enter your ID"
-                                        className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                                    />
-                                    </div>
-                                </div>
+
 
                                 <div className="w-full xl:w-1/2">
                                     <label className="mb-2.5 block text-black dark:text-white">
                                         Name
                                     </label>
                                     <input
-                                        onChange={e => setLast(e.target.value)}
+                                        onChange={e => inputValue("Name", e.target.value)}
                                         type="text"
                                         required
                                         placeholder="Enter your Name"
                                         className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                     />
                                 </div>
-                            </div>
-
-                            <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                                 <div className="w-full xl:w-1/2">
                                     <label className="mb-2.5 block text-black dark:text-white">
                                         Category
                                     </label>
                                     <div className="relative z-20 bg-transparent dark:bg-form-input mb-4.5">
-                                        <select required onChange={e => setUserId(e.target.value)} className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
+                                        <select required onChange={e => inputValue("Category", e.target.value)} className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
                                             <option value="">Select Your Category</option>
-                                            <option value="1">book</option>
+                                            <option value="book">book</option>
+                                            <option value="food">food</option>
                                         </select>
                                         <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2">
                                             <svg
@@ -106,48 +99,38 @@ function ModalAdd({ visible, onClose }: AddProps) {
                                         </span>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
+
 
                                 <div className="w-full xl:w-1/2">
                                     <label className="mb-2.5 block text-black dark:text-white">
                                         Price
                                     </label>
                                     <input
-                                        onChange={e => setLast(e.target.value)}
+                                        onChange={e => inputValue("Price", parseInt(e.target.value))}
                                         type="text"
                                         required
                                         placeholder="Enter your Price"
                                         className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                     />
                                 </div>
-                            </div>
-
-                            <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                                 <div className="w-full xl:w-1/2">
                                     <label className="mb-2.5 block text-black dark:text-white">
                                         Onhand
                                     </label>
                                     <input
-                                        onChange={e => setName(e.target.value)}
+                                        onChange={e => inputValue("Onhand", parseFloat(e.target.value))}
                                         type="text"
                                         required
                                         placeholder="Enter your Onhand"
                                         className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                     />
                                 </div>
-
-                                <div className="w-full xl:w-1/2">
-                                    <label className="mb-2.5 block text-black dark:text-white">
-                                        Profit
-                                    </label>
-                                    <input
-                                        onChange={e => setLast(e.target.value)}
-                                        type="text"
-                                        required
-                                        placeholder="Enter your Profit"
-                                        className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                                    />
-                                </div>
                             </div>
+
+
 
 
 
