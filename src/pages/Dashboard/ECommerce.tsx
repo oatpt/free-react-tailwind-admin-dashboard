@@ -8,6 +8,7 @@ import ChartTwo from '../../components/ChartTwo.tsx';
 import ChatCard from '../../components/ChatCard.tsx';
 import MapOne from '../../components/MapOne.tsx';
 import TableOne from '../../components/TableOne.tsx';
+import TableTwo from '../../components/TableTwo.tsx';
 
 const ECommerce = () => {
   return (
@@ -20,14 +21,13 @@ const ECommerce = () => {
       </div>
 
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
-        <ChartOne />
-        <ChartTwo />
+       
         <ChartThree />
-        <MapOne />
-        <div className="col-span-12 xl:col-span-8">
-          <TableOne />
+       
+        <div className="col-span-12 xl:col-span-7">
+          <TableTwo/>
         </div>
-        <ChatCard />
+        
       </div>
     </>
   );
