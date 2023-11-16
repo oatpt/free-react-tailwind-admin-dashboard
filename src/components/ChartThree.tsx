@@ -58,7 +58,7 @@ const ChartThree: React.FC = () => {
       <div className="mb-3 justify-between gap-4 sm:flex">
         <div>
           <h5 className="text-xl font-semibold text-black dark:text-white">
-            Visitors Analytics
+            Top 5 Product
           </h5>
         </div>
         <div>
@@ -70,6 +70,7 @@ const ChartThree: React.FC = () => {
             >
               <option value="">Monthly</option>
               <option value="">Yearly</option>
+              <option value="">day</option>
             </select>
             <span className="absolute top-1/2 right-3 z-10 -translate-y-1/2">
               <svg

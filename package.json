@@ -16,7 +16,8 @@
   "dependencies": {
     "@heroicons/react": "^2.0.18",
     "apexcharts": "^3.41.0",
-    "axios": "^1.6.1",
+    "axios": "^0.24.0",
+    "chart.js": "^4.4.0",
     "headlessui": "^0.0.0",
     "jsvectormap": "^1.5.3",
     "match-sorter": "^6.3.1",

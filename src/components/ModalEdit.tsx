@@ -1,38 +1,62 @@
 import React, { useEffect, useState } from 'react'
-import { XMarkIcon } from '@heroicons/react/24/solid'
-import axios from 'axios';
 
-type AddProps = {
-    visible: boolean;
-    onClose: any;
+import axios from 'axios';
+type Props = {
+    ProductID: string;
+    Onhand: number;
+    Price: number;
+    Profit: number;
+    Name: string;
+    Category: string
+  }
+type EditProps = {
+    visible1: boolean;
+    onClose1: any;
+    data:Props;
+    index:number;
 }
-function ModalAdd({ visible, onClose }: AddProps) {
-    const [data, setData] = useState({
+
+
+function ModalEdit({ visible1, onClose1,data,index }: EditProps) {
+    
+    if(data==undefined){
+        return
+      }
+    const [InvenData, setInvenData] = useState({
+        ProductID: "",
         Name: "",
         Category: "",
         Price: 0,
         Onhand: 0,
-        Profit:0,
     });
 
     const inputValue = (name: string, value: any) => {
-        setData({
-            ...data,
+        setInvenData({
+            ...InvenData,
             [name]: value,
         });
     };
-    //console.log(data);
 
-    // profit 0.3*price
-
-    const handleOnClose = (e: any) => {
-        if (e.target.id === "container") onClose();
+    
+    useEffect(() => {
+        setInvenData({
+            ProductID: data.ProductID,
+            Name: data.Name,
+            Category: data.Category,
+            Price: data.Price,
+            Onhand: data.Onhand,
+        })
+    }, [index]);
+    const handleOnClose1 = (e: any) => {
+        if (e.target.id === "container") onClose1();
     };
-    if (!visible) return null;
+    console.log(InvenData);
+    
+    if (!visible1) return null;
     return (
         <div
             id='container'
-            onClick={handleOnClose}
+            onClick={handleOnClose1}
             className='fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center'>
 
             <div className="flex flex-col gap-9">
@@ -41,17 +65,18 @@ function ModalAdd({ visible, onClose }: AddProps) {
                     <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
                         <div className='flex items-center justify-between'>
                             <h3 className="font-medium text-lg text-black dark:text-white">
-                                Add Inventory
+                                Edit Inventory
                             </h3>
-                            <button>
-                                <XMarkIcon className='text-white w-5 h-5' />
-                            </button>
+                            {/* <button>
+                        <XMarkIcon className='text-white w-5 h-5' />
+                    </button> */}
                         </div>
                     </div>
 
                     <form onSubmit={async (event) => {
-                        await axios.post("http://127.0.0.1:8000/inventory", data);
-                        handleOnClose;
+                        await axios.post("http://127.0.0.1:8000/inventory/update",InvenData);
+                        handleOnClose1;
+                        alert('agfdhgj');
                         return event.preventDefault()
                     }}>
                         <div className="p-6.5 ">
@@ -64,10 +89,10 @@ function ModalAdd({ visible, onClose }: AddProps) {
                                         Name
                                     </label>
                                     <input
+                                        value={InvenData.Name}
                                         onChange={e => inputValue("Name", e.target.value)}
                                         type="text"
                                         required
-                                        placeholder="Enter your Name"
                                         className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                     />
                                 </div>
@@ -76,7 +101,8 @@ function ModalAdd({ visible, onClose }: AddProps) {
                                         Category
                                     </label>
                                     <div className="relative z-20 bg-transparent dark:bg-form-input mb-4.5">
-                                        <select required onChange={e => inputValue("Category", e.target.value)} className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
+                                        <select required onChange={e => inputValue("Category", e.target.value)}
+                                            className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
                                             <option value="">Select Your Category</option>
                                             <option value="Toys">Toys</option>
                                             <option value="Art & Crafts">Art & Crafts</option>
@@ -115,10 +141,10 @@ function ModalAdd({ visible, onClose }: AddProps) {
                                         Price
                                     </label>
                                     <input
+                                        value={InvenData.Price}
                                         onChange={e => inputValue("Price", parseInt(e.target.value))}
                                         type="text"
                                         required
-                                        placeholder="Enter your Price"
                                         className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                     />
                                 </div>
@@ -127,23 +153,16 @@ function ModalAdd({ visible, onClose }: AddProps) {
                                         Onhand
                                     </label>
                                     <input
+                                        value={InvenData.Onhand}
                                         onChange={e => inputValue("Onhand", parseFloat(e.target.value))}
                                         type="text"
                                         required
-                                        placeholder="Enter your Onhand"
                                         className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                     />
                                 </div>
                             </div>
-
-
-
-
-
-
-
                             <button className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray">
-                                Add Inventory
+                                Edit Inventory
                             </button>
                         </div>
                     </form>
@@ -164,4 +183,4 @@ function ModalAdd({ visible, onClose }: AddProps) {
     )
 }
 
-export default ModalAdd
+export default ModalEdit

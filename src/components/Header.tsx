@@ -4,6 +4,7 @@ import DarkModeSwitcher from './DarkModeSwitcher';
 import DropdownMessage from './DropdownMessage';
 import DropdownNotification from './DropdownNotification';
 import DropdownUser from './DropdownUser';
+import HomeModernIcon from '@heroicons/react/24/solid/HomeModernIcon';
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
@@ -57,7 +58,7 @@ const Header = (props: {
           {/* <!-- Hamburger Toggle BTN --> */}
 
           <Link className="block flex-shrink-0 lg:hidden" to="/">
-            <img src={Logo} alt="Logo" />
+          <HomeModernIcon className='w-8 h-8 text-white '/>
           </Link>
         </div>
 
@@ -71,9 +72,7 @@ const Header = (props: {
             <DarkModeSwitcher />
             {/* <!-- Dark Mode Toggler --> */}
 
-            {/* <!-- Notification Menu Area --> */}
-            <DropdownNotification />
-            {/* <!-- Notification Menu Area --> */}
+            
 
             
           </ul>
